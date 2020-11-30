@@ -1,0 +1,38 @@
+function magicCards(input) {
+    let deck = input.shift().split(`:`);
+    let newDeck = [];
+    let [comanda, cardName, index] = input.shift().split(` `);
+
+    while (comanda !== "Ready") {
+        if (comanda === "Add") {
+            if (deck.includes(cardName)) {
+                newDeck.push(cardName);
+            } else {
+                console.log("Card not found.");
+            }
+        } else if (comanda === "Insert") {
+            index = Number(index);
+            if (deck.includes(cardName) && (index >= 0 && index <= deck.length - 1)) {
+                newDeck.splice(index, 0, cardName);
+            } else {
+                console.log("Error!");
+            }
+        } else if (comanda === "Remove") {
+            if (newDeck.includes(cardName)) {
+                newDeck.splice(newDeck.indexOf(cardName), 1);
+            } else {
+                console.log("Card not found.");
+            }
+        } else if (comanda === "Swap") {
+            let tokenIndex = newDeck.indexOf(cardName);
+            let tokenCard = newDeck[tokenIndex];
+            let tokenCardIndex = newDeck.indexOf(index)
+            newDeck[tokenIndex] = index;
+            newDeck[tokenCardIndex] = tokenCard;
+        } else if (comanda === "Shuffle") {
+            newDeck.reverse();
+        }
+        [comanda, cardName, index] = input.shift().split(` `);
+    }
+    console.log(newDeck.join(` `));
+}
